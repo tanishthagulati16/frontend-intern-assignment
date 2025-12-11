@@ -13,3 +13,68 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+@keyframes pulse-green {
+  0%, 100% { background-color: #fff; }
+  50% { background-color: #d1fae5; }
+}
+
+@keyframes pulse-red {
+  0%, 100% { background-color: #fef2f2; }
+  50% { background-color: #fee2e2; }
+}
+
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.pulse-green {
+  animation: pulse-green 0.6s ease-in-out;
+}
+
+.pulse-red {
+  animation: pulse-red 0.6s ease-in-out;
+}
+
+.bounce-in {
+  animation: bounce-in 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slide-in 0.4s ease-out;
+}
+
+/* Smooth transitions */
+button {
+  transition: all 0.3s ease;
+}
+
+.answer-option {
+  transition: all 0.2s ease;
+}
+
+.answer-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.answer-option:active {
+  transform: translateY(0);
+}

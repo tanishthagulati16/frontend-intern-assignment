@@ -15,6 +15,7 @@ export default function QuizContainer() {
   );
   const [isQuizComplete, setIsQuizComplete] = useState(false);
   const [score, setScore] = useState(0);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   const currentQuestion = quizData.questions[currentQuestionIndex];
   const selectedAnswer = userAnswers[currentQuestionIndex];
@@ -24,16 +25,19 @@ export default function QuizContainer() {
     const newAnswers = [...userAnswers];
     newAnswers[currentQuestionIndex] = optionIndex;
     setUserAnswers(newAnswers);
+    setShowFeedback(true);
   };
 
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
+      setShowFeedback(false);
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
 
   const handleNext = () => {
     if (currentQuestionIndex < quizData.totalQuestions - 1) {
+      setShowFeedback(false);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
@@ -50,6 +54,7 @@ export default function QuizContainer() {
     setUserAnswers(Array(quizData.totalQuestions).fill(null));
     setIsQuizComplete(false);
     setScore(0);
+    setShowFeedback(false);
   };
 
   if (isQuizComplete) {
@@ -85,16 +90,43 @@ export default function QuizContainer() {
           options={currentQuestion.options}
           selectedOption={selectedAnswer}
           onOptionSelect={handleOptionSelect}
+          correctAnswer={currentQuestion.correctAnswer}
+          showFeedback={showFeedback}
         />
-        <NavigationButtons
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onSubmit={handleSubmit}
-          canGoPrevious={currentQuestionIndex > 0}
-          canGoNext={selectedAnswer !== null && !isLastQuestion}
-          isLastQuestion={isLastQuestion}
-          isAnswerSelected={selectedAnswer !== null}
-        />
+
+        {showFeedback && (
+          <div className="text-center mb-6">
+            {selectedAnswer === currentQuestion.correctAnswer ? (
+              <p className="text-green-600 font-semibold text-lg">✓ Correct!</p>
+            ) : (
+              <p className="text-red-600 font-semibold text-lg">✗ Wrong!</p>
+            )}
+          </div>
+        )}
+
+        {!showFeedback && (
+          <NavigationButtons
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onSubmit={isLastQuestion ? handleSubmit : undefined}
+            canGoPrevious={currentQuestionIndex > 0}
+            canGoNext={selectedAnswer !== null && !isLastQuestion}
+            isLastQuestion={isLastQuestion}
+            isAnswerSelected={selectedAnswer !== null}
+          />
+        )}
+
+        {showFeedback && (
+          <NavigationButtons
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onSubmit={isLastQuestion ? handleSubmit : undefined}
+            canGoPrevious={currentQuestionIndex > 0}
+            canGoNext={!isLastQuestion}
+            isLastQuestion={isLastQuestion}
+            isAnswerSelected={true}
+          />
+        )}
       </div>
     </div>
   );

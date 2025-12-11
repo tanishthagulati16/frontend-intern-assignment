@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 interface NavigationButtonsProps {
   onPrevious: () => void;
   onNext: () => void;
@@ -19,9 +21,11 @@ export default function NavigationButtons({
 }: NavigationButtonsProps) {
   return (
     <div className="flex justify-between items-center mt-10">
-      <button
+      <motion.button
         onClick={onPrevious}
         disabled={!canGoPrevious}
+        whileHover={canGoPrevious ? { scale: 1.05 } : {}}
+        whileTap={canGoPrevious ? { scale: 0.95 } : {}}
         className={`px-4 py-2 rounded-md font-medium transition-all ${
           canGoPrevious
             ? 'bg-blue-200 text-blue-900 hover:bg-blue-300 cursor-pointer'
@@ -29,12 +33,14 @@ export default function NavigationButtons({
         }`}
       >
         ← Previous
-      </button>
+      </motion.button>
 
       {isLastQuestion ? (
-        <button
+        <motion.button
           onClick={onSubmit}
           disabled={!isAnswerSelected}
+          whileHover={isAnswerSelected ? { scale: 1.05 } : {}}
+          whileTap={isAnswerSelected ? { scale: 0.95 } : {}}
           className={`px-6 py-2 rounded-md font-medium transition-all ${
             isAnswerSelected
               ? 'bg-blue-200 text-blue-900 hover:bg-blue-300 cursor-pointer'
@@ -42,11 +48,13 @@ export default function NavigationButtons({
           }`}
         >
           Submit
-        </button>
+        </motion.button>
       ) : (
-        <button
+        <motion.button
           onClick={onNext}
           disabled={!canGoNext}
+          whileHover={canGoNext ? { scale: 1.05 } : {}}
+          whileTap={canGoNext ? { scale: 0.95 } : {}}
           className={`px-4 py-2 rounded-md font-medium transition-all ${
             canGoNext
               ? 'bg-blue-200 text-blue-900 hover:bg-blue-300 cursor-pointer'
@@ -54,7 +62,7 @@ export default function NavigationButtons({
           }`}
         >
           Next →
-        </button>
+        </motion.button>
       )}
     </div>
   );
