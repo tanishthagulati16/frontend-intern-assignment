@@ -104,29 +104,15 @@ export default function QuizContainer() {
           </div>
         )}
 
-        {!showFeedback && (
-          <NavigationButtons
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            onSubmit={isLastQuestion ? handleSubmit : undefined}
-            canGoPrevious={currentQuestionIndex > 0}
-            canGoNext={selectedAnswer !== null && !isLastQuestion}
-            isLastQuestion={isLastQuestion}
-            isAnswerSelected={selectedAnswer !== null}
-          />
-        )}
-
-        {showFeedback && (
-          <NavigationButtons
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            onSubmit={isLastQuestion ? handleSubmit : undefined}
-            canGoPrevious={currentQuestionIndex > 0}
-            canGoNext={!isLastQuestion}
-            isLastQuestion={isLastQuestion}
-            isAnswerSelected={true}
-          />
-        )}
+        <NavigationButtons
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          onSubmit={isLastQuestion ? handleSubmit : undefined}
+          canGoPrevious={currentQuestionIndex > 0}
+          canGoNext={showFeedback && !isLastQuestion}
+          isLastQuestion={isLastQuestion}
+          isAnswerSelected={selectedAnswer !== null}
+        />
       </div>
     </div>
   );
